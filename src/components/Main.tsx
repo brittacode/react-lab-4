@@ -1,52 +1,42 @@
 import { useEffect, useState } from "react"
+import { Gifs } from "../models/Gif";
+import { getSearched, getTrending } from "../services/GiphyApi";
 import { Resultslist } from "./ResultsList";
 import {SearchForm} from "./SearchForm"
-export {}
+
 
 export function Main(){
 
 
- const[gifs, setGifs] = useState([]);
+ const[gifs, setGifs] = useState<Gifs[]>([]);
  const [searchTerm, setSearchTerm]= useState('')
- const [trending, setTrending] = useState ('')
-
- function setSearch(search: string){
-     setSearchTerm(search)
- }
-
- useEffect(() => {
-
-    getTrending().then((data)=> { setTrending(data.trending);
-     
-        
-
-    })
-}, [])
-
-useEffect(() => {
-
-    getSearched().then((data)=> { setSearchTerm(data.searched);
-     
-        
-
-    })
-}, [])
-
-
-
-
+ 
 
  
-    
+        useEffect(() =>{
 
+            if (searchTerm === ''){
+                getTrending().then(response => setGifs(response.data));
+            } else {
+                 getSearched(searchTerm).then(response => setGifs(response.data))
+ 
+            }
+
+        }, [searchTerm]);
+ 
+
+    
+        function setSearch(searchTerm: string){
+            setSearchTerm(searchTerm)
+        }
 
     return(
 
         <div>
 
-            <SearchForm onSubmit={(searchTerm)=> setSearch(searchTerm)}></SearchForm>
+            <SearchForm  onSearch={setSearch}></SearchForm>
 
-            <Resultslist></Resultslist>
+            <Resultslist gifs={gifs}></Resultslist>
         </div>
 
     )

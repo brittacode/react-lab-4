@@ -1,19 +1,23 @@
-import { SearchForm } from "./SearchForm"
+import { Gifs } from "../models/Gif"
 import { Results } from "./Results"
 
 
 
 
 
-export function Resultslist(props: {gifs: any[]}){
+export function Resultslist(props: {gifs:Gifs[]}){
 
 
 
     return(
         <div>
+            <div className="gifresults">
 
-            {props.gifs.map((gif) => <Results key={gif.id} gifs={gif}></Results>)}
+                
+            Results:
 
+            {props.gifs.map(gif => <Results key={gif.id} gif={gif}></Results>)}
+            </div>
         </div>
     )
 

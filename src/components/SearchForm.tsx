@@ -4,24 +4,21 @@ import { Results } from "./Results";
 import { Resultslist } from "./ResultsList";
 
 
-export function SearchForm(props: {onSubmit: (searchTerm:string) => void} ){
+export function SearchForm(props: {onSearch: (searchTerm:string) => void} ){
 
 
-    const[searchTerm, setSearchTerm] = useState('');
+    const[input, setInput] = useState('');
 
+        function passUpSearch(){
+            props.onSearch(input);
 
-
-
-    
-    
-
-
+        }
     return(
 
             <div>
                 
-            <input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} type="text"></input>
-            <button onClick={() => props.onSubmit(searchTerm)}>Search</button>
+            <input type="text" value={input} onChange={(e) => setInput(e.target.value)}></input>
+            <button onClick={passUpSearch}>Search</button>
 
             </div>
 
